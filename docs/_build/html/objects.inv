@@ -2,9 +2,9 @@
 # Project: pyWebGraph
 # Version: 0.1
 pywebgraph.console mod modules/console.html
-pywebgraph.ubigraph mod modules/ubigraph.html
-pywebgraph.webgraph.local mod modules/local.html
 pywebgraph.examples.explore mod modules/explore.html
+pywebgraph.webgraph.local mod modules/local.html
+pywebgraph.ubigraph mod modules/ubigraph.html
 pywebgraph.webgraph.server mod modules/server.html
 pywebgraph.webgraph.client mod modules/client.html
 pywebgraph.webgraph mod modules/webgraph.html
