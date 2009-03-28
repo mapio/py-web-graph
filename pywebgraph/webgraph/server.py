@@ -5,6 +5,7 @@ from pywebgraph.webgraph.local import Graph as LocalGraph
 class Graph( object ):
 	
 	PORT = 8000
+	"""The default pyWebGraph XML-RPC server port: `8000`"""
 	
 	def __init__( self, port = None ):
 		if not port: port = Graph.PORT

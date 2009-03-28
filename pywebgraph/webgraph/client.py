@@ -3,6 +3,7 @@ from xmlrpclib import ServerProxy
 class Graph( object ):
 
 	ADDRESS = "http://127.0.0.1:8000/"
+	"""The default pyWebGraph XML-RPC server address: `http://127.0.0.1:8000/`"""
 	
 	def __init__( self, address = None ):
 		if not address: address = Graph.ADDRESS
