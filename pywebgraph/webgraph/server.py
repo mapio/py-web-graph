@@ -6,7 +6,8 @@ class Graph( object ):
 	
 	PORT = 8000
 	
-	def __init__( self, port = PORT ):
+	def __init__( self, port = None ):
+		if not port: port = Graph.PORT
 		server = SimpleXMLRPCServer( ( "127.0.0.1", port ), allow_none = True )
 		server.register_introspection_functions()
 		server.register_multicall_functions()

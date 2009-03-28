@@ -152,31 +152,23 @@ if __name__ == '__main__':
 	from optparse import OptionParser
 
 	import pywebgraph.webgraph
-	from pywebgraph.webgraph.client import ADDRESS as graph_server
-	from pywebgraph.ubigraph import ADDRESS as renderer
-
-	options_defaults = { 'graph_server' : graph_server, 'renderer' : renderer }
-
-	def expand_defaults( option, opt_str, value, parser ):
-		if value == '-':
-			value = options_defaults[ option.dest ]
-		setattr( parser.values, option.dest, value )
 
 	parser = OptionParser()
-	parser.add_option( "-r", "--renderer", help = "the address of the Ubigraph server (if equals to -, it will be expanded to %s)." % renderer, action = 'callback', callback = expand_defaults, type = str )
-	parser.add_option( "-g", "--graph-server", 	help = "the address of the XML-RPC pyWebGraph graph server (if equals to -, it will be expanded to %s)." % graph_server, action = 'callback', callback = expand_defaults, type = str )
+	parser.add_option( "-r", "--renderer", help = "the address of the Ubigraph server (if equals to -, it will be expanded to the default value).", type = str )
+	parser.add_option( "-g", "--graph-server", 	help = "the address of the XML-RPC pyWebGraph graph server (if equals to -, it will be expanded to the default value).", type = str )
 	(options, args) = parser.parse_args()
-
+	
 	renderer = None
 	if options.renderer:
+		if options.renderer == '-': options.renderer = None
 		try:
 			renderer = Renderer( options.renderer )
 		except RuntimeError, msg:
 			print 'Error: connecting to ubigraph:', msg
 	
-	graph = None
 	try:
 		if options.graph_server:
+			if options.graph_server == '-': options.graph_server = None
 			graph = pywebgraph.webgraph.new_remote_graph( options.graph_server )
 		else:
 			graph = pywebgraph.webgraph.new_local_graph()

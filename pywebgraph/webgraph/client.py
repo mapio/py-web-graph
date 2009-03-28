@@ -1,10 +1,11 @@
 from xmlrpclib import ServerProxy
-
-ADDRESS = "http://127.0.0.1:8000/"
 	
 class Graph( object ):
 
-	def __init__( self, address = ADDRESS ):
+	ADDRESS = "http://127.0.0.1:8000/"
+	
+	def __init__( self, address = None ):
+		if not address: address = Graph.ADDRESS
 		self.__proxy = ServerProxy( address )
 
 	def get_num_nodes( self ):

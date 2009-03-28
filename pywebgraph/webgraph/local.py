@@ -1,9 +1,11 @@
 from functools import wraps
 
-from java.lang import Exception as JException
-
-from it.unimi.dsi.webgraph import ImmutableGraph
-from it.unimi.dsi.fastutil.io import BinIO 
+try:
+	from java.lang import Exception as JException
+	from it.unimi.dsi.webgraph import ImmutableGraph
+	from it.unimi.dsi.fastutil.io import BinIO 
+except:
+	pass # kludge to allow for Sphinx automodule
 
 def _convert_to_runtime( f ):
 	@wraps( f )

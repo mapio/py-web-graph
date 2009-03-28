@@ -1,15 +1,17 @@
-ADDRESS = 'http://127.0.0.1:20738/RPC2'
-	
 class Renderer( object ):
 
-	def __init__( self, address = ADDRESS ):
+	ADDRESS = 'http://127.0.0.1:20738/RPC2'
+	"""The default Ubigraph XML-RPC server address: `http://127.0.0.1:20738/RPC2`"""
+
+	def __init__( self, address = None ):
 		import xmlrpclib
 		import socket
+		if not address: address = Renderer.ADDRESS
 		try:
 			self.server = xmlrpclib.Server( address ).ubigraph
+			self.clear()
 		except socket.error, msg:
-			raise RuntimeError, 'connecting to ubigraph: ' + msg
-		self.clear()
+			raise RuntimeError, 'connecting to ubigraph: ' + str( msg )
 	
 	def clear( self ):
 		self.server.clear()
