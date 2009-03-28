@@ -1,4 +1,8 @@
 :mod:`pywebgraph.webgraph.client` --- An XML-RPC client consuming WebGraph data
 ===============================================================================
 
-.. module:: pywebgraph.webgraph.client
+.. automodule:: pywebgraph.webgraph.client
+
+.. autoclass:: Graph( [address] )
+   :members:
+   :undoc-members:

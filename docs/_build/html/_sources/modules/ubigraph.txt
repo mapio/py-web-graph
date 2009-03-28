@@ -1,4 +1,8 @@
 :mod:`pywebgraph.ubigraph` --- Access to Ubigraph visualization server
 ======================================================================
 
-.. module:: pywebgraph.ubigraph
+.. automodule:: pywebgraph.ubigraph
+   
+.. autoclass:: Renderer( [address] )
+   :members:
+   :undoc-members:

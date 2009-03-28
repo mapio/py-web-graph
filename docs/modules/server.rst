@@ -2,3 +2,7 @@
 ==============================================================================
 
 .. module:: pywebgraph.webgraph.server
+
+.. autoclass:: Graph( [port] )
+   :members:
+   :undoc-members:
