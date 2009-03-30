@@ -62,7 +62,7 @@ Welcome to pyWebGraph console!
 0: #1
 1: #342
 ...
-&gt;&gt; urlmap example
+&gt;&gt; namemaps example
 &gt;&gt; pwn
 #0 http://acireale.src.cnr.it/
 &gt;&gt; ls #0
@@ -71,13 +71,13 @@ Welcome to pyWebGraph console!
 ...
 &gt;&gt; cn http://acireale.src.cnr.it/acireale2001/</pre>
 </div>
-<p>First of all you load a graph with the <tt class="docutils literal"><span class="pre">graph</span></tt> command, then you can explore it (much like you would do with your filesystem): using <tt class="docutils literal"><span class="pre">pwn</span></tt> and <tt class="docutils literal"><span class="pre">cn</span></tt> (to print and change, respectively, the working node) and using <tt class="docutils literal"><span class="pre">ls</span></tt> to list outlinks. Additionaly, with <tt class="docutils literal"><span class="pre">urlmap</span></tt>, you can load a map from node numbers to URLs (and <em>vice versa</em>) that will be used when printing (and identifying) nodes.</p>
+<p>First of all you load a graph with the <tt class="docutils literal"><span class="pre">graph</span></tt> command, then you can explore it (much like you would do with your filesystem): using <tt class="docutils literal"><span class="pre">pwn</span></tt> and <tt class="docutils literal"><span class="pre">cn</span></tt> (to print and change, respectively, the working node) and using <tt class="docutils literal"><span class="pre">ls</span></tt> to list outlinks. Additionaly, with <tt class="docutils literal"><span class="pre">namemaps</span></tt>, you can load a map from node numbers to their names (and <em>vice versa</em> if possible) that will be used when printing (and identifying) nodes.</p>
 <div class="section" id="node-specifications">
 <h2>Node specifications<a class="headerlink" href="#node-specifications" title="Permalink to this headline">¶</a></h2>
 <p>A node can be specified to commands of the console in three ways:</p>
 <ul class="simple">
 <li>as an absolute node number (a non negative integer prefixed by <tt class="docutils literal"><span class="pre">#</span></tt>),</li>
-<li>as a node name (any string enclosed in double quotes &#8211; use <tt class="docutils literal"><span class="pre">urlmap</span></tt> to load a suitable map from node names to numbers, and viceversa),</li>
+<li>as a node name (any string enclosed in double quotes),</li>
 <li>as a path (absolute, or relative to the current working node).</li>
 </ul>
 <p>A <em>relative path</em> is a sequence of non negative integers separated by <tt class="docutils literal"><span class="pre">/</span></tt>, if it also starts with <tt class="docutils literal"><span class="pre">/</span></tt>, it is said to be an <em>absolute path</em>; the <em>current working node</em> is a given node of the graph with respect to which relative paths are to be considered. Numbers in the sequence refer to outlinks (that are numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">/2/4</span></tt> referes to the fifth outlink of the third outlink of node 0; similarly, path <tt class="docutils literal"><span class="pre">1//2</span></tt> refers to the third outlink af the second outlink of the current working node.</p>
@@ -94,7 +94,7 @@ The navigational methaphor hence differs from the filesystem case, corresponding
 <div class="highlight-python"><pre>$ jython -m pywebgraph.console -r-
 Welcome to pyWebGraph console!
 &gt;&gt; graph example
-&gt;&gt; urlmap example
+&gt;&gt; namemaps example
 &gt;&gt; add 0
 &gt;&gt; add 1
 &gt;&gt; label 0 on</pre>
