@@ -32,7 +32,7 @@ Node specifications
 A node can be specified to commands of the console in three ways:
 
 * as an absolute node number (a non negative integer prefixed by ``#``),
-* as an URL (any string starting with ``http://``),
+* as a node name (any string enclosed in double quotes -- use :samp:`urlmap` to load a suitable map from node names to numbers, and viceversa),
 * as a path (absolute, or relative to the current working node).
 
 A :dfn:`relative path` is a sequence of non negative integers separated by ``/``, if it also starts with ``/``, it is said to be an :dfn:`absolute path`; the :dfn:`current working node` is a given node of the graph with respect to which relative paths are to be considered. Numbers in the sequence refer to outlinks (that are numbered starting from 0). For example, path ``/2/4`` referes to the fifth outlink of the third outlink of node 0; similarly, path ``1//2`` refers to the third outlink af the second outlink of the current working node.

@@ -77,7 +77,7 @@ Welcome to pyWebGraph console!
 <p>A node can be specified to commands of the console in three ways:</p>
 <ul class="simple">
 <li>as an absolute node number (a non negative integer prefixed by <tt class="docutils literal"><span class="pre">#</span></tt>),</li>
-<li>as an URL (any string starting with <tt class="docutils literal"><span class="pre">http://</span></tt>),</li>
+<li>as a node name (any string enclosed in double quotes &#8211; use <tt class="docutils literal"><span class="pre">urlmap</span></tt> to load a suitable map from node names to numbers, and viceversa),</li>
 <li>as a path (absolute, or relative to the current working node).</li>
 </ul>
 <p>A <em>relative path</em> is a sequence of non negative integers separated by <tt class="docutils literal"><span class="pre">/</span></tt>, if it also starts with <tt class="docutils literal"><span class="pre">/</span></tt>, it is said to be an <em>absolute path</em>; the <em>current working node</em> is a given node of the graph with respect to which relative paths are to be considered. Numbers in the sequence refer to outlinks (that are numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">/2/4</span></tt> referes to the fifth outlink of the third outlink of node 0; similarly, path <tt class="docutils literal"><span class="pre">1//2</span></tt> refers to the third outlink af the second outlink of the current working node.</p>
