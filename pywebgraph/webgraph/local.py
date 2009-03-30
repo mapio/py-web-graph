@@ -1,4 +1,5 @@
 from functools import wraps
+from os.path import isfile
 
 try:
 	from java.lang import Exception as JException
@@ -22,8 +23,8 @@ class Graph( object ):
 
 	def __init__( self ):
 		self.graph = None
-		self._url_to_node_map = None
-		self._node_to_url_map = None
+		self._name_to_node_map = None
+		self._node_to_name_map = None
 		self._current_node = 0
 	
 	def get_current_node( self ):
@@ -42,30 +43,38 @@ class Graph( object ):
 	num_nodes = property( get_num_nodes )
 	
 	@_convert_to_runtime
-	def load_graph( self, path ):
-		self.graph = ImmutableGraph.load( path )
+	def load_graph( self, basename ):
+		self.graph = ImmutableGraph.load( basename )
 		self._num_nodes = self.graph.numNodes()
-		self._url_to_node_map = None
-		self._node_to_url_map = None
+		self._name_to_node_map = None
+		self._node_to_name_map = None
 		self.current_node = 0
 
 	@_convert_to_runtime
-	def load_url_map( self, path ):
+	def load_name_map( self, basename ):
 		assert self.graph
-		self._url_to_node_map = BinIO.loadObject( path )
-		self._node_to_url_map = self._url_to_node_map.list()
+		self._name_to_node_map = None
+		self._node_to_name_map = None
+		if isfile( basename + '.iepm' ):
+			self._name_to_node_map = BinIO.loadObject( basename + '.iepm' )
+			self._node_to_name_map = self._name_to_node_map.list()
+		else:
+			if isfile( basename + '.fcsl' ):
+				self._node_to_name_map = BinIO.loadObject( basename + '.fcsl' )
+			if isfile( basename + '.mwhc' ):
+				self._name_to_node_map = BinIO.loadObject( basename + '.mwhc' )
 	
-	def url_to_node( self, url ):
+	def name_to_node( self, name ):
 		assert self.graph
-		if self._url_to_node_map:
-			return self._url_to_node_map.getLong( url )
+		if self._name_to_node_map:
+			return self._name_to_node_map.getLong( name )
 		else:
 			return -1
 
-	def node_to_url( self, node ):
+	def node_to_name( self, node ):
 		assert self.graph and node >= 0 and node < self.num_nodes
-		if self._node_to_url_map:
-			return self._node_to_url_map.get( node ).toString()
+		if self._node_to_name_map:
+			return self._node_to_name_map.get( node ).toString()
 		else:
 			return ''
 
@@ -81,7 +90,7 @@ class Graph( object ):
 		elif node_spec.startswith( '#' ):
 			node = int( node_spec[ 1: ] )
 		elif node_spec.startswith( '"' ):
-			node = self.url_to_node( node_spec[ 1 : -1 ] )
+			node = self.name_to_node( node_spec[ 1 : -1 ] )
 			if node == -1:
 				raise ValueError, 'Node name not in map (maybe the map was not loaded)'
 		else:
@@ -111,7 +120,7 @@ class Graph( object ):
 		assert self.graph 
 		def tos( node ):
 			assert node >= 0 and node < self.num_nodes
-			return '#' + str( node ) + ' ' + self.node_to_url( node ).encode( 'utf8' )
+			return '#' + str( node ) + ' ' + self.node_to_name( node ).encode( 'utf8' )
 		if not isinstance( node, list ):
 			return tos( node )
 		else:

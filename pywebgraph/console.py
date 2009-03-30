@@ -68,8 +68,8 @@ class Console( Cmd ):
 
 	@_swallow_exceptions
 	@_ensure_graph	
-	def do_urlmap( self, args ):
-		self.graph.load_url_map( args )
+	def do_namemaps( self, args ):
+		self.graph.load_name_map( args )
 
 	@_swallow_exceptions
 	@_ensure_graph
@@ -107,7 +107,6 @@ class Console( Cmd ):
 	@_ensure_renderer
 	def do_add( self, args ):
 		u = self.graph.resolve( args )
-		self.renderer.addnode( u )
 		for v in self.graph.outlinks( u ):
 			if ( u == v ): continue
 			self.renderer.addedge( u, v )
