@@ -78,13 +78,12 @@ Welcome to pyWebGraph console!
 <ul class="simple">
 <li>as an absolute node number (a non negative integer prefixed by <tt class="docutils literal"><span class="pre">#</span></tt>),</li>
 <li>as a node name (any string enclosed in double quotes),</li>
-<li>as a path (absolute, or relative to the current working node).</li>
+<li>as a path (relative to the current working node).</li>
 </ul>
-<p>A <em>relative path</em> is a sequence of non negative integers separated by <tt class="docutils literal"><span class="pre">/</span></tt>, if it also starts with <tt class="docutils literal"><span class="pre">/</span></tt>, it is said to be an <em>absolute path</em>; the <em>current working node</em> is a given node of the graph with respect to which relative paths are to be considered. Numbers in the sequence refer to outlinks (that are numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">/2/4</span></tt> referes to the fifth outlink of the third outlink of node 0; similarly, path <tt class="docutils literal"><span class="pre">1//2</span></tt> refers to the third outlink af the second outlink of the current working node.</p>
+<p>The <em>current working node</em> is a given node of the graph. A <em>path</em> is a sequence of integers separated by <tt class="docutils literal"><span class="pre">/</span></tt> (leading, trailing, and repeated separators are ignored); numbers in the sequence refer to outlinks (or inlinks, if prefixed by a <tt class="docutils literal"><span class="pre">-</span></tt>, in any case, numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">2/4</span></tt> referes to the fifth outlink of the third outlink of the current node; similarly, path <tt class="docutils literal"><span class="pre">3/-1/5</span></tt> refers to the sixth outlink af the second inlink of the fourth outlink of the current working node.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Since web graphs need not to be connected, it is not true in general that every node can be specified with an absolute path (that is a path relative to node 0), or that evey relative path can be converted to an absolute path.
-The navigational methaphor hence differs from the filesystem case, corresponding to a (of course connected) tree.</p>
+<p class="last">Since web graphs need not to be connected, it is not true in general that every node can be specified with a path relative to some specific (so to say &#8220;root&#8221;) node, hence the notion of an <em>absolute</em> path makes little sense here. This navigational methaphor hence differs from the filesystem case, corresponding to a (of course connected) tree.</p>
 </div>
 </div>
 <div class="section" id="visualization">

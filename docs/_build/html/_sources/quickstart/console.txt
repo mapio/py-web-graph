@@ -33,14 +33,13 @@ A node can be specified to commands of the console in three ways:
 
 * as an absolute node number (a non negative integer prefixed by ``#``),
 * as a node name (any string enclosed in double quotes),
-* as a path (absolute, or relative to the current working node).
+* as a path (relative to the current working node).
 
-A :dfn:`relative path` is a sequence of non negative integers separated by ``/``, if it also starts with ``/``, it is said to be an :dfn:`absolute path`; the :dfn:`current working node` is a given node of the graph with respect to which relative paths are to be considered. Numbers in the sequence refer to outlinks (that are numbered starting from 0). For example, path ``/2/4`` referes to the fifth outlink of the third outlink of node 0; similarly, path ``1//2`` refers to the third outlink af the second outlink of the current working node.
+The :dfn:`current working node` is a given node of the graph. A :dfn:`path` is a sequence of integers separated by ``/`` (leading, trailing, and repeated separators are ignored); numbers in the sequence refer to outlinks (or inlinks, if prefixed by a :samp:`-`, in any case, numbered starting from 0). For example, path ``2/4`` referes to the fifth outlink of the third outlink of the current node; similarly, path ``3/-1/5`` refers to the sixth outlink af the second inlink of the fourth outlink of the current working node.
 
 .. note::
 
-	Since web graphs need not to be connected, it is not true in general that every node can be specified with an absolute path (that is a path relative to node 0), or that evey relative path can be converted to an absolute path. 
-	The navigational methaphor hence differs from the filesystem case, corresponding to a (of course connected) tree.
+	Since web graphs need not to be connected, it is not true in general that every node can be specified with a path relative to some specific (so to say "root") node, hence the notion of an *absolute* path makes little sense here. This navigational methaphor hence differs from the filesystem case, corresponding to a (of course connected) tree.
 
 
 Visualization
