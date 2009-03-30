@@ -41,6 +41,7 @@ class Graph( object ):
 
 	def __init__( self ):
 		self.graph = None
+		self.graph_t = None
 		self._name_to_node_map = None
 		self._node_to_name_map = None
 		self._current_node = 0
@@ -64,6 +65,10 @@ class Graph( object ):
 	def load_graph( self, basename ):
 		self.graph = ImmutableGraph.load( basename )
 		self._num_nodes = self.graph.numNodes()
+		if isfile( basename + '-t.properties' ):
+			self.graph_t = ImmutableGraph.load( basename + '-t' )
+		else:
+			self.graph_t = None
 		self._name_to_node_map = None
 		self._node_to_name_map = None
 		self.current_node = 0
@@ -87,7 +92,7 @@ class Graph( object ):
 		if self._name_to_node_map:
 			return self._name_to_node_map.getLong( name )
 		else:
-			return -1
+			raise RuntimeError, 'No map was not loaded'
 
 	def node_to_name( self, node ):
 		assert self.graph and node >= 0 and node < self.num_nodes
@@ -101,37 +106,44 @@ class Graph( object ):
 		outdegree = self.graph.outdegree( node )
 		return self.graph.successorArray( node ).tolist()[ 0 : outdegree ]
 
+	def inlinks( self, node ):
+		assert self.graph and node >= 0 and node < self.num_nodes
+		if not self.graph_t: raise RuntimeError, 'Transposed graph was not loaded'
+		indegree = self.graph_t.outdegree( node )
+		return self.graph_t.successorArray( node ).tolist()[ 0 : indegree ]
+
 	def resolve( self, node_spec ):
 		assert self.graph
+
 		if not node_spec:
 			node = self.current_node
 		elif node_spec.startswith( '#' ):
 			node = int( node_spec[ 1: ] )
 		elif node_spec.startswith( '"' ):
 			node = self.name_to_node( node_spec[ 1 : -1 ] )
-			if node == -1:
-				raise ValueError, 'Node name not in map (maybe the map was not loaded)'
 		else:
-			nodes = node_spec.rstrip( '/' ).split( '/' )
+		
+			nodes = node_spec.split( '/' )
 			pos = 0
-			curr = nodes.pop( 0 )
-			if curr:
-				outlinks = self.outlinks( self.current_node )
-				x = int( curr )
-				if x < 0 or x >= len( outlinks ):
-					raise ValueError, 'Outlink out of range in path at pos ' + str( pos )
-				node = outlinks[ x ]
-			else:
-				node = 0
+			node = self.current_node
 			while nodes:
+				next = nodes.pop( 0 )
 				pos = pos + 1
-				outlinks = self.outlinks( node )
-				x = int( nodes.pop( 0 ) )
-				if x < 0 or x >= len( outlinks ):
-					raise ValueError, 'Outlink out of range in path at pos ' + str( pos )
-				node = outlinks[ x ]
-		if node < 0 or node >= self.num_nodes:
-			raise ValueError, 'Node out of range'
+				if not next: continue
+				if next.startswith( '-' ):
+					try:
+						links = self.inlinks( node )
+						next = -int( next )
+					except RuntimeError, msg:
+						raise ValueError, str( msg  ) + ', relative node specification at pos ' + str( pos )
+				else:
+					links = self.outlinks( node )
+					next = int( next )
+				if next < 0 or next >= len( links ):
+					raise ValueError, 'Relative node specification out of range in path at pos ' + str( pos )
+				node = 	links[ next ]
+		
+		assert node >= 0 and node < self.num_nodes
 		return node
 
 	def node_tos( self, node ):

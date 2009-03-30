@@ -106,6 +106,11 @@ class Console( Cmd ):
 
 	@_swallow_exceptions
 	@_ensure_graph
+	def do_sl( self, args ):
+		print self.graph.node_tos( self.graph.inlinks( self.graph.resolve( args ) ) ) 
+
+	@_swallow_exceptions
+	@_ensure_graph
 	def do_rwa( self, args ):
 		num = int( args )
 		curr = self.graph.current_node
