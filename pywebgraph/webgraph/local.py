@@ -80,10 +80,10 @@ class Graph( object ):
 			node = self.current_node
 		elif node_spec.startswith( '#' ):
 			node = int( node_spec[ 1: ] )
-		elif node_spec.startswith( 'http://' ):
-			node = self.url_to_node( node_spec )
+		elif node_spec.startswith( '"' ):
+			node = self.url_to_node( node_spec[ 1 : -1 ] )
 			if node == -1:
-				raise ValueError, 'URL not in map (maybe the map was not loaded)'
+				raise ValueError, 'Node name not in map (maybe the map was not loaded)'
 		else:
 			nodes = node_spec.rstrip( '/' ).split( '/' )
 			pos = 0
@@ -92,7 +92,7 @@ class Graph( object ):
 				outlinks = self.outlinks( self.current_node )
 				x = int( curr )
 				if x < 0 or x >= len( outlinks ):
-					raise ValueError, 'URL not in path at pos ' + str( pos )
+					raise ValueError, 'Outlink out of range in path at pos ' + str( pos )
 				node = outlinks[ x ]
 			else:
 				node = 0
@@ -101,7 +101,7 @@ class Graph( object ):
 				outlinks = self.outlinks( node )
 				x = int( nodes.pop( 0 ) )
 				if x < 0 or x >= len( outlinks ):
-					raise ValueError, 'URL not in path at pos ' + str( pos )
+					raise ValueError, 'Outlink out of range in path at pos ' + str( pos )
 				node = outlinks[ x ]
 		if node < 0 or node >= self.num_nodes:
 			raise ValueError, 'Node out of range'
@@ -111,8 +111,8 @@ class Graph( object ):
 		assert self.graph 
 		def tos( node ):
 			assert node >= 0 and node < self.num_nodes
-			return '#' + str( node ) + ' ' + self.node_to_url( node )
-		if isinstance( node, int ):
+			return '#' + str( node ) + ' ' + self.node_to_url( node ).encode( 'utf8' )
+		if not isinstance( node, list ):
 			return tos( node )
 		else:
 			return '\n'.join( [ str( i ) + ': ' + tos( x ) for i, x in enumerate( node ) ] )
