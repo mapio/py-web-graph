@@ -22,7 +22,7 @@ class Console( Cmd ):
 	def __init__( self, graph, renderer = None ):
 		Cmd.__init__( self )
 		self.prompt = ">> "
-		self.intro	= "Welcome to pyWebGraph console!"
+		self.intro = "Welcome to pyWebGraph console!"
 		self.graph = graph
 		self.renderer = renderer
 		self._graph_loaded = False
@@ -174,5 +174,5 @@ if __name__ == '__main__':
 			graph = pywebgraph.webgraph.new_local_graph()
 	except RuntimeError, msg:
 		print 'Error: instantiating graph:', msg
-	else:	
+	else:
 		Console( graph, renderer ).cmdloop() 
