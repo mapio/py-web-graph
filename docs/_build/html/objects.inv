@@ -26,6 +26,7 @@ pywebgraph.webgraph.server.Graph.PORT attribute modules/server.html
 pywebgraph.webgraph.client.Graph.num_nodes attribute modules/client.html
 pywebgraph.webgraph.local.Graph.node_tos method modules/local.html
 pywebgraph.webgraph.local.Graph class modules/local.html
+pywebgraph.webgraph.client.Graph.node_tos method modules/client.html
 pywebgraph.webgraph.local.Graph.get_current_node method modules/local.html
 pywebgraph.webgraph.local.Graph.node_to_name method modules/local.html
 pywebgraph.webgraph.local.Graph.inlinks method modules/local.html
