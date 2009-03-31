@@ -17,9 +17,10 @@
 # along with pyWebGraph.  If not, see <http://www.gnu.org/licenses/>.
 
 from cmd import Cmd
+from functools import wraps
 from random import choice
 from shlex import split
-from functools import wraps
+from types import FunctionType
 
 from pywebgraph.ubigraph import Renderer
 
@@ -34,13 +35,31 @@ def _swallow_exceptions( f ):
 		else:
 			return result
 	return wrapper
-		
+
+def _add_help_from_doc( cls ):
+	def mk_help_func( name ):
+		def help_func( self ):
+			print getattr( self, name ).__doc__
+		help_func.__name__ = 'help_' + name[ 3 : ]
+		help_func.__doc__ = 'Auto-generated'
+		return help_func
+	for name, obj in cls.__dict__.items():
+		if type( obj ) is FunctionType:
+			if name.startswith( 'do_' ) and obj.__doc__:
+				help_func_name = 'help_' + name[ 3 : ]
+				if not help_func_name in cls.__dict__:
+					setattr( cls, help_func_name, mk_help_func( name ) )
+	return cls
+
 class Console( Cmd ):
 
 	def __init__( self, graph, renderer = None ):
 		Cmd.__init__( self )
 		self.prompt = ">> "
-		self.intro = "Welcome to pyWebGraph console!"
+		self.intro = """pyWebGraph console, Copyright (C) 2009 Massimo Santini
+This program comes with ABSOLUTELY NO WARRANTY; for details type `help'.
+This is free software, and you are welcome to redistribute it under 
+certain conditions; see the COPYING file for details."""
 		self.graph = graph
 		self.renderer = renderer
 		self._graph_loaded = False
@@ -58,6 +77,13 @@ class Console( Cmd ):
 
 	def do_EOF( self, args ):
 		return -1 
+
+	def do_help( self, arg ):
+		if arg:	Cmd.do_help( self, arg )
+		else:
+			print "Available commands:",
+			print ", ".join( [ name[ 3 : ] for name in dir( self )	if name.startswith( 'do_' ) and getattr( self, name ).__doc__ ] )
+			print "Use 'help <command>' for details."
 
 
 	def _ensure_graph( f ):
@@ -81,32 +107,44 @@ class Console( Cmd ):
 
 	@_swallow_exceptions
 	def do_graph( self, args ):
+		"""graph basename
+Loads the graph specified by the given basename; if basename + '-t' is present, it also load the transposed graph."""
 		self.graph.load_graph( args )
 		self._graph_loaded = True
 
 	@_swallow_exceptions
 	@_ensure_graph	
 	def do_namemaps( self, args ):
+		"""namemaps basename
+Loads the name to node maps specified by the given basename (allowed extensions are, 'fcsl', 'iepm', and 'mwhc')."""
 		self.graph.load_name_map( args )
 
 	@_swallow_exceptions
 	@_ensure_graph
 	def do_cn( self, args ):
+		"""cn [node_spec]
+Sets the current working node to the one specified by the given node_spec."""
 		self.graph.current_node = self.graph.resolve( args )
 
 	@_swallow_exceptions
 	@_ensure_graph
 	def do_pwn( self, args ):
+		"""pwn
+Prints the current working node."""
 		print self.graph.node_tos( self.graph.current_node )
 
 	@_swallow_exceptions
 	@_ensure_graph
 	def do_ls( self, args ):
+		"""ls [node_spec]
+Prints a list of the outlinks of the given node_spec."""
 		print self.graph.node_tos( self.graph.outlinks( self.graph.resolve( args ) ) ) 
 
 	@_swallow_exceptions
 	@_ensure_graph
 	def do_sl( self, args ):
+		"""sl [node_spec]
+Prints a list of the inlinks of the given node_spec."""
 		print self.graph.node_tos( self.graph.inlinks( self.graph.resolve( args ) ) ) 
 
 	@_swallow_exceptions
@@ -129,6 +167,8 @@ class Console( Cmd ):
 	@_ensure_graph
 	@_ensure_renderer
 	def do_add( self, args ):
+		"""add [node_spec]
+Sends to the renderer the node specified by the given node_spec and its outneighbours."""
 		u = self.graph.resolve( args )
 		for v in self.graph.outlinks( u ):
 			if ( u == v ): continue
@@ -138,18 +178,24 @@ class Console( Cmd ):
 	@_ensure_graph
 	@_ensure_renderer
 	def do_shown( self, args ):
+		"""shown
+List the nodes added to the renderer so far."""
 		print self.graph.node_tos( self.renderer.nodes )
 
 	@_swallow_exceptions
 	@_ensure_graph
 	@_ensure_renderer
 	def do_highlight( self, args ):
+		"""highlight [node_spec]
+Highlights in the renderer the node specified by the given node_spec."""
 		self.renderer.id( self.graph.resolve( args ) )
 		
 	@_swallow_exceptions
 	@_ensure_graph
 	@_ensure_renderer
 	def do_label( self, args ):
+		"""label [node_spec] [off]
+Turns on/off the label in the renderer of the node specified by the given node_spec."""
 		sargs =	split( args )
 		if len( sargs ) == 2:
 			nodes = [ self.graph.resolve( sargs.pop( 0 ) ) ]
@@ -166,6 +212,8 @@ class Console( Cmd ):
 	@_ensure_graph
 	@_ensure_renderer
 	def do_clear( self, args ):
+		"""clear
+Clears the renderer."""
 		self.renderer.clear()
 
 
