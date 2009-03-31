@@ -92,7 +92,7 @@ class Graph( object ):
 		if self._name_to_node_map:
 			return self._name_to_node_map.getLong( name )
 		else:
-			raise RuntimeError, 'No map was not loaded'
+			raise RuntimeError, 'No map was loaded'
 
 	def node_to_name( self, node ):
 		assert self.graph and node >= 0 and node < self.num_nodes
@@ -143,7 +143,8 @@ class Graph( object ):
 					raise ValueError, 'Relative node specification out of range in path at pos ' + str( pos )
 				node = 	links[ next ]
 		
-		assert node >= 0 and node < self.num_nodes
+		if node < 0 or node >= self.num_nodes:
+			raise ValueError, "Node out of range (maybe not found in maps)."
 		return node
 
 	def node_tos( self, node ):
