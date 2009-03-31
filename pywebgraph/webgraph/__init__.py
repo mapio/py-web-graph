@@ -35,7 +35,7 @@ def new_remote_graph( address = None ):
 	except xmlrpclib.Fault:
 		pass
 	except socket.error:
-		raise RuntimeError, "pyWebGraph XML-RPC server at %s not responding." % address
+		raise RuntimeError, "pyWebGraph XML-RPC server at not responding." 
 		graph = None
 	except:
 		raise
