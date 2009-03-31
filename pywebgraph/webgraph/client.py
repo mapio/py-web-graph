@@ -26,7 +26,14 @@ class Graph( object ):
 	def __init__( self, address = None ):
 		if not address: address = Graph.ADDRESS
 		self.__proxy = ServerProxy( address )
+		self.__wrapped = [ 'current_node', 'num_nodes', 'node_tos' ]
 
+	def __getattr__( self, name ):
+		if name in self.__wrapped:
+			return getattr( self, name )
+		else:
+			return getattr( self.__proxy, name )
+		
 	def get_num_nodes( self ):
 		return self.__proxy.get_num_nodes()
 	
@@ -40,8 +47,5 @@ class Graph( object ):
 
 	current_node = property( get_current_node, set_current_node )
 
-	def __getattr__( self, name ):
-		if name == 'current_node' or name == 'num_nodes' :
-			return getattr( self, name )
-		else:
-			return getattr( self.__proxy, name )
+	def node_tos( self, node ):
+		return self.__proxy.node_tos( node ).encode( 'utf8' )
