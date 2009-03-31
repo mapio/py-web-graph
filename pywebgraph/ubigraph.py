@@ -57,13 +57,14 @@ class Renderer( object ):
 			self.nodes.append( node )
 			self.server.new_vertex_w_id( node )
 		
-	def addedge( self, from_node, to_node ):
+	def addedge( self, from_node, to_node, imply = True ):
 		if ( from_node, to_node ) not in self.edges:
-			self.edges.append( ( from_node, to_node ) )
-			self.addnode( from_node )
-			self.addnode( to_node )
-			self.server.new_edge( from_node, to_node )
-
+			if imply or ( from_node in self.nodes and to_node in self.nodes ):
+				self.edges.append( ( from_node, to_node ) )
+				self.addnode( from_node )
+				self.addnode( to_node )
+				self.server.new_edge( from_node, to_node )
+				
 	def highlight( self, node ):
 		from threading import Timer
 		def unHighlight():
