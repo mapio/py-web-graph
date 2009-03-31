@@ -27,7 +27,7 @@ help:
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	-rm -rf _build/*
+	-rm  -f _build/*{,/*{,/*,{,/*}}} >/dev/null 2>&1 || true
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
