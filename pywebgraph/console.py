@@ -1,6 +1,6 @@
 # pyWebGraph, a bridge between WebGraph an {J,P}ython 
 # Copyright (C) 2009 Massimo Santini
-#
+# 
 # This file is part of pyWebGraph.
 # 
 # pyWebGraph is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 from cmd import Cmd
 from functools import wraps
 from random import choice
+from re import search
 from shlex import split
 from types import FunctionType
 
@@ -34,7 +35,7 @@ def _swallow_exceptions( f ):
 			return None
 		else:
 			return result
-	return wrapper
+	return f
 
 def _add_help_from_doc( cls ):
 	def mk_help_func( name ):
@@ -110,6 +111,7 @@ certain conditions; see the COPYING file for details."""
 		"""graph basename
 Loads the graph specified by the given basename; if basename + '-t' is present, it also load the transposed graph."""
 		self.graph.load_graph( args )
+		if self.renderer: self.renderer.clear()
 		self._graph_loaded = True
 
 	@_swallow_exceptions
@@ -138,7 +140,7 @@ Prints the current working node."""
 	def do_ls( self, args ):
 		"""ls [node_spec]
 Prints a list of the outlinks of the given node_spec."""
-		print self.graph.node_tos( self.graph.outlinks( self.graph.resolve( args ) ) ) 
+		print self.graph.node_tos( self.graph.outlinks( self.graph.resolve( args ) ) )
 
 	@_swallow_exceptions
 	@_ensure_graph
@@ -166,14 +168,35 @@ Prints a list of the inlinks of the given node_spec."""
 	@_swallow_exceptions
 	@_ensure_graph
 	@_ensure_renderer
-	def do_add( self, args ):
-		"""add [node_spec]
-Sends to the renderer the node specified by the given node_spec and its outneighbours."""
-		u = self.graph.resolve( args )
-		for v in self.graph.outlinks( u ):
-			if ( u == v ): continue
-			self.renderer.addedge( u, v )
+	def do_bfs( self, args ):
+		"""bsf [depth [node_spec]]
+Performs a BFS of given depth from the given node_spec adding discovered nodes (and edges) to the renderer."""
+		m = search( r'(?:(\d+)){0,1}(?:\s+(.*)){0,1}', args )
+		if not m: raise ValueError, "Must specify depth and an optional node_spec"
+		depth = int( m.group( 1 ) ) if m.group( 1 ) else 0
+		u = self.graph.resolve( m.group( 2 ) if m.group( 2 ) else '' )
+		queue = [ u, -1 ]
+		self.renderer.addnode( u )
+		while queue and depth:
+			u = queue.pop( 0 )
+			if u < 0:
+				depth = depth - 1
+				queue.append( u )
+				continue
+			for v in self.graph.outlinks( u ):
+				self.renderer.addedge( u, v )
+				queue.append( v )
 
+	@_swallow_exceptions
+	@_ensure_graph
+	@_ensure_renderer
+	def do_isg( self, args ):
+		"""isg
+Makes the graph in the rendered the induced subgraph given by the shown nodes."""
+		for u in list( self.renderer.nodes ):
+			for v in self.graph.outlinks( u ):
+				self.renderer.addedge( u, v, False )
+			
 	@_swallow_exceptions
 	@_ensure_graph
 	@_ensure_renderer
@@ -188,7 +211,7 @@ List the nodes added to the renderer so far."""
 	def do_highlight( self, args ):
 		"""highlight [node_spec]
 Highlights in the renderer the node specified by the given node_spec."""
-		self.renderer.id( self.graph.resolve( args ) )
+		self.renderer.highlight( self.graph.resolve( args ) )
 		
 	@_swallow_exceptions
 	@_ensure_graph
