@@ -170,10 +170,10 @@ Prints a list of the inlinks of the given node_spec."""
 	@_ensure_renderer
 	def do_bfs( self, args ):
 		"""bsf [depth [node_spec]]
-Performs a BFS of given depth from the given node_spec adding discovered nodes (and edges) to the renderer."""
+Performs a BFS of given depth (default 1) from the given node_spec adding discovered nodes (and edges) to the renderer."""
 		m = search( r'(?:(\d+)){0,1}(?:\s+(.*)){0,1}', args )
 		if not m: raise ValueError, "Must specify depth and an optional node_spec"
-		depth = int( m.group( 1 ) ) if m.group( 1 ) else 0
+		depth = int( m.group( 1 ) ) if m.group( 1 ) else 1
 		u = self.graph.resolve( m.group( 2 ) if m.group( 2 ) else '' )
 		queue = [ u, -1 ]
 		self.renderer.addnode( u )
@@ -208,8 +208,8 @@ List the nodes added to the renderer so far."""
 	@_swallow_exceptions
 	@_ensure_graph
 	@_ensure_renderer
-	def do_highlight( self, args ):
-		"""highlight [node_spec]
+	def do_hl( self, args ):
+		"""hl [node_spec]
 Highlights in the renderer the node specified by the given node_spec."""
 		self.renderer.highlight( self.graph.resolve( args ) )
 		
