@@ -21,7 +21,7 @@ The pyWebGraph console is meant as a tool to explore WebGrph data. A sample sess
 	0: #1 http://acireale.src.cnr.it/acireale2001/
 	1: #342 http://acireale.src.cnr.it/htm/diretta.htm
 	...
-	>> cn http://acireale.src.cnr.it/acireale2001/
+	>> cn "http://acireale.src.cnr.it/acireale2001/"
 	
 First of all you load a graph with the :samp:`graph` command, then you can explore it (much like you would do with your filesystem): using :samp:`pwn` and :samp:`cn` (to print and change, respectively, the working node) and using :samp:`ls` to list outlinks. Additionaly, with :samp:`namemaps`, you can load a map from node numbers to their names (and *vice versa* if possible) that will be used when printing (and identifying) nodes.
 
@@ -45,7 +45,7 @@ The :dfn:`current working node` is a given node of the graph. A :dfn:`path` is a
 Visualization
 -------------
 
-If the console is given the ``-r/--renderer`` command line option pointing to a Ubigraph server, then the console can be used to visualize WebGraph data using the commands  :samp:`add`, :samp:`highlight`, :samp:`label`, and :samp:`clear`; please use the :samp:`help` console command for details. 
+If the console is given the ``-r/--renderer`` command line option pointing to a Ubigraph server, then the console can be used to visualize WebGraph data using the commands  :samp:`bfs`, :samp:`isg`, :samp:`hl`, :samp:`label`, and :samp:`clear`; please use the :samp:`help` console command for details. 
 
 A sample session could be::
 
@@ -53,8 +53,8 @@ A sample session could be::
 	Welcome to pyWebGraph console!
 	>> graph example
 	>> namemaps example
-	>> add 0
-	>> add 1
+	>> bfs 0
+	>> bfs 1
 	>> label 0 on
 
 This could give an output like
