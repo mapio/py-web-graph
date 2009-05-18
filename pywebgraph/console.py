@@ -35,7 +35,7 @@ def _swallow_exceptions( f ):
 			return None
 		else:
 			return result
-	return f
+	return wrapper
 
 def _add_help_from_doc( cls ):
 	def mk_help_func( name ):
@@ -176,16 +176,20 @@ Performs a BFS of given depth (default 1) from the given node_spec adding discov
 		depth = int( m.group( 1 ) ) if m.group( 1 ) else 1
 		u = self.graph.resolve( m.group( 2 ) if m.group( 2 ) else '' )
 		queue = [ u, -1 ]
+		seen = set()
 		self.renderer.addnode( u )
-		while queue and depth:
+		seen.add( u )
+		while queue and depth > 0:
 			u = queue.pop( 0 )
 			if u < 0:
-				depth = depth - 1
+				depth -= 1
 				queue.append( u )
 				continue
 			for v in self.graph.outlinks( u ):
-				self.renderer.addedge( u, v )
-				queue.append( v )
+				if v not in seen:
+					self.renderer.addedge( u, v )
+					queue.append( v )
+					seen.add( v )
 
 	@_swallow_exceptions
 	@_ensure_graph
