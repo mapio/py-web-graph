@@ -82,10 +82,12 @@ class Graph( object ):
 			self._name_to_node_map = BinIO.loadObject( basename + '.iepm' )
 			self._node_to_name_map = self._name_to_node_map.list()
 		else:
-			if isfile( basename + '.fcsl' ):
-				self._node_to_name_map = BinIO.loadObject( basename + '.fcsl' )
-			if isfile( basename + '.mwhc' ):
-				self._name_to_node_map = BinIO.loadObject( basename + '.mwhc' )
+			if isfile( basename + '.fcl' ):
+				self._node_to_name_map = BinIO.loadObject( basename + '.fcl' )
+			if isfile( basename + '.smph' ):
+				self._name_to_node_map = BinIO.loadObject( basename + '.smph' )
+			elif isfile( basename + '.mph' ):
+				self._name_to_node_map = BinIO.loadObject( basename + '.smph' )
 	
 	def name_to_node( self, name ):
 		assert self.graph
