@@ -1,7 +1,7 @@
 Welcome to pyWebGraph's documentation!
 ======================================
 
-This package is intended as a simple bridge easing the usage of the `WebGraph <http://webgraph.dsi.unimi.it/>`_ library in Python.
+This package is intended as a simple bridge easing the usage of the `WebGraph <http://webgraph.di.unimi.it/>`_ library in Python.
 
 This software is hosted at `<http://code.google.com/p/py-web-graph/>`_.
 
@@ -16,9 +16,9 @@ This documentation includes:
    :maxdepth: 2
 
    quickstart/index
-   modules/index  
-  
-  
+   modules/index
+
+
 Indices and tables
 ==================
 

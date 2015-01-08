@@ -1,25 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The pyWebGraph console &mdash; pyWebGraph v0.1a documentation</title>
+    <title>The pyWebGraph console &mdash; pyWebGraph 0.1a documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '0.1a',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="pyWebGraph v0.1a documentation" href="../index.html" />
+    <link rel="top" title="pyWebGraph 0.1a documentation" href="../index.html" />
     <link rel="up" title="Quickstart documents" href="index.html" />
     <link rel="next" title="Integration with Ubigraph" href="ubigraph.html" />
     <link rel="prev" title="Quickstart documents" href="index.html" /> 
@@ -32,15 +36,15 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="ubigraph.html" title="Integration with Ubigraph"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Quickstart documents"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyWebGraph v0.1a documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyWebGraph 0.1a documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Quickstart documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -53,7 +57,7 @@
   <div class="section" id="the-pywebgraph-console">
 <span id="console-label"></span><h1>The pyWebGraph console<a class="headerlink" href="#the-pywebgraph-console" title="Permalink to this headline">¶</a></h1>
 <p>The pyWebGraph console is meant as a tool to explore WebGrph data. A sample session could be:</p>
-<div class="highlight-python"><pre>$ jython -m pywebgraph.console
+<div class="highlight-python"><div class="highlight"><pre>$ jython -m pywebgraph.console
 Welcome to pyWebGraph console!
 &gt;&gt; graph example
 &gt;&gt; pwn
@@ -69,9 +73,10 @@ Welcome to pyWebGraph console!
 0: #1 http://acireale.src.cnr.it/acireale2001/
 1: #342 http://acireale.src.cnr.it/htm/diretta.htm
 ...
-&gt;&gt; cn "http://acireale.src.cnr.it/acireale2001/"</pre>
+&gt;&gt; cn &quot;http://acireale.src.cnr.it/acireale2001/&quot;
+</pre></div>
 </div>
-<p>First of all you load a graph with the <tt class="docutils literal"><span class="pre">graph</span></tt> command, then you can explore it (much like you would do with your filesystem): using <tt class="docutils literal"><span class="pre">pwn</span></tt> and <tt class="docutils literal"><span class="pre">cn</span></tt> (to print and change, respectively, the working node) and using <tt class="docutils literal"><span class="pre">ls</span></tt> to list outlinks. Additionaly, with <tt class="docutils literal"><span class="pre">namemaps</span></tt>, you can load a map from node numbers to their names (and <em>vice versa</em> if possible) that will be used when printing (and identifying) nodes.</p>
+<p>First of all you load a graph with the <tt class="samp docutils literal"><span class="pre">graph</span></tt> command, then you can explore it (much like you would do with your filesystem): using <tt class="samp docutils literal"><span class="pre">pwn</span></tt> and <tt class="samp docutils literal"><span class="pre">cn</span></tt> (to print and change, respectively, the working node) and using <tt class="samp docutils literal"><span class="pre">ls</span></tt> to list outlinks. Additionaly, with <tt class="samp docutils literal"><span class="pre">namemaps</span></tt>, you can load a map from node numbers to their names (and <em>vice versa</em> if possible) that will be used when printing (and identifying) nodes.</p>
 <div class="section" id="node-specifications">
 <h2>Node specifications<a class="headerlink" href="#node-specifications" title="Permalink to this headline">¶</a></h2>
 <p>A node can be specified to commands of the console in three ways:</p>
@@ -80,7 +85,7 @@ Welcome to pyWebGraph console!
 <li>as a node name (any string enclosed in double quotes),</li>
 <li>as a path (relative to the current working node).</li>
 </ul>
-<p>The <em>current working node</em> is a given node of the graph. A <em>path</em> is a sequence of integers separated by <tt class="docutils literal"><span class="pre">/</span></tt> (leading, trailing, and repeated separators are ignored); numbers in the sequence refer to outlinks (or inlinks, if prefixed by a <tt class="docutils literal"><span class="pre">-</span></tt>, in any case, numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">2/4</span></tt> referes to the fifth outlink of the third outlink of the current node; similarly, path <tt class="docutils literal"><span class="pre">3/-1/5</span></tt> refers to the sixth outlink af the second inlink of the fourth outlink of the current working node.</p>
+<p>The <em class="dfn">current working node</em> is a given node of the graph. A <em class="dfn">path</em> is a sequence of integers separated by <tt class="docutils literal"><span class="pre">/</span></tt> (leading, trailing, and repeated separators are ignored); numbers in the sequence refer to outlinks (or inlinks, if prefixed by a <tt class="samp docutils literal"><span class="pre">-</span></tt>, in any case, numbered starting from 0). For example, path <tt class="docutils literal"><span class="pre">2/4</span></tt> referes to the fifth outlink of the third outlink of the current node; similarly, path <tt class="docutils literal"><span class="pre">3/-1/5</span></tt> refers to the sixth outlink af the second inlink of the fourth outlink of the current working node.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Since web graphs need not to be connected, it is not true in general that every node can be specified with a path relative to some specific (so to say &#8220;root&#8221;) node, hence the notion of an <em>absolute</em> path makes little sense here. This navigational methaphor hence differs from the filesystem case, corresponding to a (of course connected) tree.</p>
@@ -88,15 +93,16 @@ Welcome to pyWebGraph console!
 </div>
 <div class="section" id="visualization">
 <h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
-<p>If the console is given the <tt class="docutils literal"><span class="pre">-r/--renderer</span></tt> command line option pointing to a Ubigraph server, then the console can be used to visualize WebGraph data using the commands  <tt class="docutils literal"><span class="pre">bfs</span></tt>, <tt class="docutils literal"><span class="pre">isg</span></tt>, <tt class="docutils literal"><span class="pre">hl</span></tt>, <tt class="docutils literal"><span class="pre">label</span></tt>, and <tt class="docutils literal"><span class="pre">clear</span></tt>; please use the <tt class="docutils literal"><span class="pre">help</span></tt> console command for details.</p>
+<p>If the console is given the <tt class="docutils literal"><span class="pre">-r/--renderer</span></tt> command line option pointing to a Ubigraph server, then the console can be used to visualize WebGraph data using the commands  <tt class="samp docutils literal"><span class="pre">bfs</span></tt>, <tt class="samp docutils literal"><span class="pre">isg</span></tt>, <tt class="samp docutils literal"><span class="pre">hl</span></tt>, <tt class="samp docutils literal"><span class="pre">label</span></tt>, and <tt class="samp docutils literal"><span class="pre">clear</span></tt>; please use the <tt class="samp docutils literal"><span class="pre">help</span></tt> console command for details.</p>
 <p>A sample session could be:</p>
-<div class="highlight-python"><pre>$ jython -m pywebgraph.console -r-
+<div class="highlight-python"><div class="highlight"><pre>$ jython -m pywebgraph.console -r-
 Welcome to pyWebGraph console!
 &gt;&gt; graph example
 &gt;&gt; namemaps example
 &gt;&gt; bfs 0
 &gt;&gt; bfs 1
-&gt;&gt; label 0 on</pre>
+&gt;&gt; label 0 on
+</pre></div>
 </div>
 <p>This could give an output like</p>
 <img alt="../_images/ugex.png" src="../_images/ugex.png" />
@@ -104,10 +110,10 @@ Welcome to pyWebGraph console!
 <div class="section" id="xml-rpc-server">
 <h2>XML-RPC Server<a class="headerlink" href="#xml-rpc-server" title="Permalink to this headline">¶</a></h2>
 <p>It is likely that one wants to use this library with a standard Python interpreter (say one that supports the Python 2.6 version). This is made possible by limiting the need of a Java capable interpreter (like Jython that supports only the Python 2.5 vesrion) to the code accessing WebGraph, allowing any other interpreter to access the data via XML-RPC.</p>
-<p>Two low level components are needed: a server (implemented in module <a title="" class="reference external" href="../modules/server.html#module-pywebgraph.webgraph.server"><tt class="xref docutils literal"><span class="pre">pywebgraph.webgraph.server</span></tt></a>) exposing the data and a client (implemented in <a title="" class="reference external" href="../modules/client.html#module-pywebgraph.webgraph.client"><tt class="xref docutils literal"><span class="pre">pywebgraph.webgraph.client</span></tt></a>) able to access it.</p>
-<p>Such mechanism is made available the console via the <tt class="docutils literal"><span class="pre">-g/--graph-server</span></tt> command line option (and thanks to the fact that <a title="" class="reference external" href="../modules/server.html#module-pywebgraph.webgraph.server"><tt class="xref docutils literal"><span class="pre">pywebgraph.webgraph.server</span></tt></a> is also executable).</p>
+<p>Two low level components are needed: a server (implemented in module <a class="reference internal" href="../modules/server.html#module-pywebgraph.webgraph.server" title="pywebgraph.webgraph.server"><tt class="xref py py-mod docutils literal"><span class="pre">pywebgraph.webgraph.server</span></tt></a>) exposing the data and a client (implemented in <a class="reference internal" href="../modules/client.html#module-pywebgraph.webgraph.client" title="pywebgraph.webgraph.client"><tt class="xref py py-mod docutils literal"><span class="pre">pywebgraph.webgraph.client</span></tt></a>) able to access it.</p>
+<p>Such mechanism is made available the console via the <tt class="docutils literal"><span class="pre">-g/--graph-server</span></tt> command line option (and thanks to the fact that <a class="reference internal" href="../modules/server.html#module-pywebgraph.webgraph.server" title="pywebgraph.webgraph.server"><tt class="xref py py-mod docutils literal"><span class="pre">pywebgraph.webgraph.server</span></tt></a> is also executable).</p>
 <p>A sample session could be:</p>
-<div class="highlight-python"><pre>$ jython -m pywebgraph.webgraph.server &amp;
+<div class="highlight-python"><div class="highlight"><pre>$ jython -m pywebgraph.webgraph.server &amp;
 Listening on port 8000
 $ python2.6 -m pywebgraph.console -g-
 Welcome to pyWebGraph console!
@@ -115,7 +121,8 @@ Welcome to pyWebGraph console!
 &gt;&gt; ls
 0: #1
 1: #342
-...</pre>
+...
+</pre></div>
 </div>
 </div>
 </div>
@@ -126,40 +133,40 @@ Welcome to pyWebGraph console!
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="">The pyWebGraph console</a><ul>
-<li><a class="reference external" href="#node-specifications">Node specifications</a></li>
-<li><a class="reference external" href="#visualization">Visualization</a></li>
-<li><a class="reference external" href="#xml-rpc-server">XML-RPC Server</a></li>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The pyWebGraph console</a><ul>
+<li><a class="reference internal" href="#node-specifications">Node specifications</a></li>
+<li><a class="reference internal" href="#visualization">Visualization</a></li>
+<li><a class="reference internal" href="#xml-rpc-server">XML-RPC Server</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">Quickstart documents</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="ubigraph.html"
-                                  title="next chapter">Integration with Ubigraph</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../_sources/quickstart/console.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Quickstart documents</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ubigraph.html"
+                        title="next chapter">Integration with Ubigraph</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/quickstart/console.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -171,7 +178,7 @@ Welcome to pyWebGraph console!
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="ubigraph.html" title="Integration with Ubigraph"
@@ -179,13 +186,13 @@ Welcome to pyWebGraph console!
         <li class="right" >
           <a href="index.html" title="Quickstart documents"
              >previous</a> |</li>
-        <li><a href="../index.html">pyWebGraph v0.1a documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyWebGraph 0.1a documentation</a> &raquo;</li>
           <li><a href="index.html" >Quickstart documents</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, Massimo Santini.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6b1.
+        &copy; Copyright 2009, Massimo Santini.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
