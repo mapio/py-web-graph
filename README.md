@@ -9,4 +9,4 @@ The code in this project is based on
 
 and has been tested on Mac OS X 10.5.6.
 
-For details, please refer to the [documentation](http://py-web-graph.googlecode.com/svn/trunk/docs/_build/html/index.html).
+For details, please refer to the [documentation](http://mapio.github.io/py-web-graph/).
