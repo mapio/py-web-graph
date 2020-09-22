@@ -87,7 +87,7 @@ class Graph( object ):
 			if isfile( basename + '.smph' ):
 				self._name_to_node_map = BinIO.loadObject( basename + '.smph' )
 			elif isfile( basename + '.mph' ):
-				self._name_to_node_map = BinIO.loadObject( basename + '.smph' )
+				self._name_to_node_map = BinIO.loadObject( basename + '.mph' )
 	
 	def name_to_node( self, name ):
 		assert self.graph
